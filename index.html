@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Gaurav’s Journey – Beginner to Topper | Super Pass Path</title>
+
+<style>
+    body {
+        background: linear-gradient(160deg, #050b1f, #0e1a3c);
+        font-family: 'Poppins', sans-serif;
+        color: #fff;
+        display: flex;
+        justify-content: center;
+        padding-top: 40px;
+    }
+
+    .box {
+        width: 90%;
+        max-width: 500px;
+        background: rgba(255, 255, 255, 0.08);
+        padding: 30px;
+        border-radius: 20px;
+        text-align: center;
+        backdrop-filter: blur(6px);
+        box-shadow: 0 12px 40px rgba(0,0,0,0.45);
+        animation: fadeIn 0.8s ease-out;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .main-heading {
+        font-size: 1.6rem;
+        font-weight: 700;
+        margin-bottom: 10px;
+    }
+
+    .sub-heading {
+        font-size: 0.95rem;
+        color: #dbeafe;
+        margin-bottom: 18px;
+    }
+
+    .level-title {
+        font-size: 1.3rem;
+        margin-bottom: 15px;
+        font-weight: 600;
+        color: #facc15;
+    }
+
+    .question-box {
+        background: rgba(255,255,255,0.12);
+        padding: 18px;
+        border-radius: 14px;
+    }
+
+    .option {
+        background: rgba(255,255,255,0.2);
+        padding: 10px;
+        margin: 10px 0;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: 0.2s;
+        border: 1px solid transparent;
+    }
+
+    .option:hover {
+        background: rgba(255,255,255,0.3);
+        transform: scale(1.03);
+    }
+
+    .option.wrong {
+        background: rgba(248,113,113,0.18);
+        border-color: #f87171;
+    }
+
+    .option.correct {
+        background: rgba(34,197,94,0.2);
+        border-color: #22c55e;
+    }
+
+    .feedback-msg {
+        margin-top: 6px;
+        font-size: 0.85rem;
+        min-height: 18px;
+        color: #fecaca;
+        text-align: center;
+    }
+
+    .overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(0,0,0,0.7);
+        display: none;
+        justify-content: center;
+        align-items: center;
+        backdrop-filter: blur(5px);
+    }
+
+    .popup {
+        background: #1e293b;
+        padding: 25px;
+        border-radius: 20px;
+        width: 85%;
+        max-width: 360px;
+        text-align: center;
+        border: 2px solid #22c55e;
+        animation: popAnim 0.4s ease-out;
+    }
+
+    @keyframes popAnim {
+        from { transform: scale(0.6); opacity: 0; }
+        to   { transform: scale(1); opacity: 1; }
+    }
+
+    .popup button {
+        padding: 10px 18px;
+        background: #22c55e;
+        border: none;
+        color: #0f172a;
+        font-size: 0.95rem;
+        font-weight: bold;
+        border-radius: 25px;
+        cursor: pointer;
+        transition: 0.15s;
+        width: 100%;
+        margin-top: 18px;
+    }
+
+    /* ⭐ Feature List inside popup */
+    .feature-list {
+        text-align: left;
+        margin: 18px 0;
+    }
+
+    .feature-item {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin: 8px 0;
+        font-size: 0.95rem;
+        color: #d1fae5;
+        font-weight: 500;
+    }
+
+    .feature-item span {
+        color: #22c55e;
+        font-size: 1.2rem;
+    }
+</style>
+</head>
+
+<body>
+
+<div class="box" id="mainBox">
+
+    <div class="main-heading">Unlock Beginner to Topper Level 🚀</div>
+    <div class="sub-heading">Follow Topper’s path—start as a Beginner and level up like a Rank 1 achiever using Super Pass!</div>
+
+    <div class="level-title" id="levelTitle">🥉 Level 1: Beginner</div>
+
+    <div class="question-box" id="questionBox"></div>
+
+</div>
+
+<!-- Popup -->
+<div class="overlay" id="popup">
+    <div class="popup">
+        <h3>🔥 Achiever Level Unlocked!</h3>
+        <p>“75% of Students reached TOPPER level only after upgrading to Super Pass?”</p>
+
+        <!-- ⭐ Features Highlight -->
+        <div class="feature-list">
+            <div class="feature-item"><span>✔</span> Live Classes by Top Educators</div>
+            <div class="feature-item"><span>✔</span> Unlimited Mock Tests & Previous Year Papers</div>
+            <div class="feature-item"><span>✔</span> Doubt Solving Sessions with Expert Faculty</div>
+        </div>
+
+        <button onclick="window.open('https://testbk.co/1f9wk','_blank')">
+            Upgrade to Super Pass @ ₹1
+        </button>
+    </div>
+</div>
+
+<script>
+/* ----------------------------------
+      QUESTION BANK (20 PER LEVEL)
+-----------------------------------*/
+
+const beginnerQuestions = [
+    { q: "What is 6 + 4?", options: ["10", "9", "8"], ans: "10" },
+    { q: "What is 8 - 3?", options: ["6", "5", "4"], ans: "5" },
+    { q: "What comes after 11?", options: ["10", "12", "13"], ans: "12" },
+    { q: "Which is greatest?", options: ["5", "8", "2"], ans: "8" },
+    { q: "What is 7 + 2?", options: ["10", "9", "8"], ans: "9" },
+    { q: "Which number is smallest?", options: ["6", "1", "3"], ans: "1" },
+    { q: "What is 9 - 5?", options: ["3", "4", "5"], ans: "4" },
+    { q: "What is 10 - 1?", options: ["9", "8", "10"], ans: "9" },
+    { q: "Which comes before 20?", options: ["21", "19", "18"], ans: "19" },
+    { q: "What is 4 + 4?", options: ["7", "8", "6"], ans: "8" },
+    { q: "What is 2 + 6?", options: ["7", "8", "9"], ans: "8" },
+    { q: "What is 5 + 2?", options: ["6", "7", "8"], ans: "7" },
+    { q: "What is 3 + 3?", options: ["5", "6", "7"], ans: "6" },
+    { q: "Which is even?", options: ["3", "4", "7"], ans: "4" },
+    { q: "What is 12 - 2?", options: ["10", "9", "11"], ans: "10" },
+    { q: "What comes after 9?", options: ["8", "10", "11"], ans: "10" },
+    { q: "What is 1 + 1?", options: ["2", "3", "1"], ans: "2" },
+    { q: "Which is odd?", options: ["6", "9", "4"], ans: "9" },
+    { q: "What is 3 + 5?", options: ["9", "7", "8"], ans: "8" },
+    { q: "What is 1 + 4?", options: ["6", "5", "4"], ans: "5" }
+];
+
+const explorerQuestions = [
+    { q: "Which gas do plants release?", options: ["Oxygen", "CO₂", "Nitrogen"], ans: "Oxygen" },
+    { q: "Largest planet?", options: ["Mars", "Jupiter", "Earth"], ans: "Jupiter" },
+    { q: "H2O is?", options: ["Salt", "Water", "Oxygen"], ans: "Water" },
+    { q: "Heart has how many chambers?", options: ["2", "4", "6"], ans: "4" },
+    { q: "Blood pumps by?", options: ["Liver", "Heart", "Brain"], ans: "Heart" },
+    { q: "Sun is a?", options: ["Planet", "Star", "Rock"], ans: "Star" },
+    { q: "Earth rotates in?", options: ["24 hrs", "12 hrs", "48 hrs"], ans: "24 hrs" },
+    { q: "Human body has how many bones?", options: ["206", "250", "150"], ans: "206" },
+    { q: "Plants absorb?", options: ["CO₂", "Oxygen", "Helium"], ans: "CO₂" },
+    { q: "The closest planet to Sun?", options: ["Earth", "Mars", "Mercury"], ans: "Mercury" },
+    { q: "The hardest substance?", options: ["Gold", "Iron", "Diamond"], ans: "Diamond" },
+    { q: "Human brain weighs approx?", options: ["1.3 kg", "3 kg", "0.5 kg"], ans: "1.3 kg" },
+    { q: "Which organ detoxifies?", options: ["Liver", "Heart", "Lungs"], ans: "Liver" },
+    { q: "Fish breathe using?", options: ["Nose", "Lungs", "Gills"], ans: "Gills" },
+    { q: "Birds have?", options: ["Fur", "Feathers", "Scales"], ans: "Feathers" },
+    { q: "Plants make food by?", options: ["Breathing", "Photosynthesis", "Eating"], ans: "Photosynthesis" },
+    { q: "Which planet is red?", options: ["Venus", "Mars", "Saturn"], ans: "Mars" },
+    { q: "Insects have how many legs?", options: ["6", "8", "4"], ans: "6" },
+    { q: "Largest ocean?", options: ["Atlantic", "Pacific", "Indian"], ans: "Pacific" },
+    { q: "Smallest bone?", options: ["Stapes", "Tibia", "Femur"], ans: "Stapes" }
+];
+
+const challengerQuestions = [
+    { q: "Who discovered gravity?", options: ["Einstein", "Newton", "Bohr"], ans: "Newton" },
+    { q: "Speed of light?", options: ["3×10⁸ m/s", "3×10⁶ m/s", "3×10⁴ m/s"], ans: "3×10⁸ m/s" },
+    { q: "Heaviest metal?", options: ["Iron", "Gold", "Osmium"], ans: "Osmium" },
+    { q: "Vitamin from sunlight?", options: ["A", "C", "D"], ans: "D" },
+    { q: "Universal donor?", options: ["O-", "AB+", "A+"], ans: "O-" },
+    { q: "Atomic number of oxygen?", options: ["6", "8", "10"], ans: "8" },
+    { q: "Smallest prime number?", options: ["1", "2", "3"], ans: "2" },
+    { q: "Highest mountain?", options: ["K2", "Everest", "Kangchenjunga"], ans: "Everest" },
+    { q: "Which planet has rings?", options: ["Earth", "Mars", "Saturn"], ans: "Saturn" },
+    { q: "Water boils at?", options: ["50°C", "100°C", "150°C"], ans: "100°C" },
+    { q: "Fastest land animal?", options: ["Tiger", "Cheetah", "Lion"], ans: "Cheetah" },
+    { q: "Human blood pH?", options: ["7.4", "3.1", "10.2"], ans: "7.4" },
+    { q: "Sunlight contains?", options: ["UV", "Gamma", "X-Ray"], ans: "UV" },
+    { q: "Lungs capacity?", options: ["6 L", "2 L", "10 L"], ans: "6 L" },
+    { q: "Brain cells called?", options: ["Neurons", "Tissues", "Plasma"], ans: "Neurons" },
+    { q: "Metal that floats on water?", options: ["Iron", "Lithium", "Copper"], ans: "Lithium" },
+    { q: "Largest desert?", options: ["Sahara", "Gobi", "Arctic"], ans: "Sahara" },
+    { q: "Strongest muscle?", options: ["Tongue", "Heart", "Leg"], ans: "Heart" },
+    { q: "Which organ stores bile?", options: ["Liver", "Stomach", "Gallbladder"], ans: "Gallbladder" },
+    { q: "Sound travels fastest in?", options: ["Air", "Water", "Solid"], ans: "Solid" }
+];
+
+const achieverQuestions = [
+    { q: "NASA stands for?", options: ["North American Space Agency", "National Aeronautics and Space Administration", "New Aero Scientific Agency"], ans: "National Aeronautics and Space Administration" },
+    { q: "First man in space?", options: ["Neil Armstrong", "Yuri Gagarin", "Buzz Aldrin"], ans: "Yuri Gagarin" },
+    { q: "Einstein’s equation?", options: ["F=ma", "E=mc²", "PV=nRT"], ans: "E=mc²" },
+    { q: "Which planet has most moons?", options: ["Earth", "Jupiter", "Venus"], ans: "Jupiter" },
+    { q: "Deepest ocean point?", options: ["Mariana Trench", "Java Trench", "Tonga Trench"], ans: "Mariana Trench" },
+    { q: "Human DNA shape?", options: ["Single helix", "Double helix", "Triple helix"], ans: "Double helix" },
+    { q: "Who invented telephone?", options: ["Alexander Graham Bell", "Edison", "Tesla"], ans: "Alexander Graham Bell" },
+    { q: "Fastest bird?", options: ["Eagle", "Peregrine Falcon", "Hawk"], ans: "Peregrine Falcon" },
+    { q: "Which gas causes global warming?", options: ["CO₂", "Helium", "Nitrogen"], ans: "CO₂" },
+    { q: "Largest continent?", options: ["Africa", "Asia", "Europe"], ans: "Asia" }
+];
+
+/* ----------------------------------
+      RANDOM QUESTION LOADER
+-----------------------------------*/
+
+function loadQuestion(level) {
+    let qSet;
+
+    if (level === 1) qSet = beginnerQuestions;
+    if (level === 2) qSet = explorerQuestions;
+    if (level === 3) qSet = challengerQuestions;
+    if (level === 4) qSet = achieverQuestions;
+
+    const random = qSet[Math.floor(Math.random() * qSet.length)];
+
+    const safeAns = random.ans.replace(/'/g, "\\'");
+    const optionsHtml = random.options
+        .map(opt => {
+            const safeOpt = opt.replace(/'/g, "\\'");
+            return `<div class="option" onclick="checkAnswer(${level}, '${safeOpt}', '${safeAns}', this)">${opt}</div>`;
+        })
+        .join("");
+
+    document.getElementById("questionBox").innerHTML = `
+        <h3>${level === 1 ? "Beginner" : level === 2 ? "Explorer" : level === 3 ? "Challenger" : "Achiever"} Question</h3>
+        <p>${random.q}</p>
+        ${optionsHtml}
+        <div id="feedback" class="feedback-msg"></div>
+    `;
+}
+
+/* ----------------------------------
+      ANSWER CHECK + LEVEL LOGIC
+-----------------------------------*/
+
+function checkAnswer(level, selected, correct, elem) {
+    const feedbackEl = document.getElementById("feedback");
+
+    if (selected !== correct) {
+        // Indicate wrong – keep question active
+        feedbackEl.textContent = "Not correct yet — try once more!";
+        elem.classList.add("wrong");
+        elem.style.pointerEvents = "none"; // disable only this option
+        return;
+    }
+
+    // Correct answer
+    feedbackEl.textContent = "✅ Correct! Moving to next level...";
+    elem.classList.add("correct");
+
+    setTimeout(() => {
+        if (level === 1) goToLevel2();
+        else if (level === 2) goToLevel3();
+        else if (level === 3) goToLevel4();
+        // Level 4 stays on CTA
+    }, 500);
+}
+
+/* Level 2 */
+function goToLevel2() {
+    document.getElementById("levelTitle").innerHTML = "🔎 Level 2: Explorer";
+    loadQuestion(2);
+}
+
+/* Level 3 */
+function goToLevel3() {
+    document.getElementById("levelTitle").innerHTML = "⚔️ Level 3: Challenger";
+    loadQuestion(3);
+}
+
+/* Level 4 */
+function goToLevel4() {
+    document.getElementById("levelTitle").innerHTML = "🏆 Level 4: Achiever";
+    document.getElementById("popup").style.display = "flex";
+    loadQuestion(4);
+}
+
+function closePopup() {
+    document.getElementById("popup").style.display = "none";
+}
+
+/* Load first question */
+loadQuestion(1);
+</script>
+
+</body>
+</html>
