@@ -1,359 +1,505 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<title>Gaurav’s Journey – Beginner to Topper | Super Pass Path</title>
-
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>IVC – Testbook Buddy</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&family=DM+Serif+Display&display=swap" rel="stylesheet">
 <style>
-    body {
-        background: linear-gradient(160deg, #050b1f, #0e1a3c);
-        font-family: 'Poppins', sans-serif;
-        color: #fff;
-        display: flex;
-        justify-content: center;
-        padding-top: 40px;
-    }
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --orange:#FF5B2E;--navy:#0F1F38;--bg:#F5F3EF;
+  --r:20px;--font:'Sora',sans-serif;--serif:'DM Serif Display',serif;
+}
+html,body{
+  height:100%;width:100%;
+  font-family:var(--font);
+  background:var(--bg);
+  color:var(--navy);
+  overflow:hidden;
+}
 
-    .box {
-        width: 90%;
-        max-width: 500px;
-        background: rgba(255, 255, 255, 0.08);
-        padding: 30px;
-        border-radius: 20px;
-        text-align: center;
-        backdrop-filter: blur(6px);
-        box-shadow: 0 12px 40px rgba(0,0,0,0.45);
-        animation: fadeIn 0.8s ease-out;
-    }
+/* ── FULL PAGE LAYOUT ── */
+.page{
+  height:100dvh;
+  display:flex;flex-direction:column;
+  align-items:center;
+  justify-content:flex-start;
+  padding:0;
+}
 
-    @keyframes fadeIn {
-        from { opacity: 0; transform: translateY(20px); }
-        to   { opacity: 1; transform: translateY(0); }
-    }
+/* ── HEADER ── */
+.header{
+  width:100%;max-width:420px;
+  padding:14px 20px 10px;
+  display:flex;align-items:center;justify-content:space-between;
+  border-bottom:1px solid #E8E4DC;
+  flex-shrink:0;background:var(--bg);
+}
+.brand{display:flex;align-items:center;gap:8px}
+.brand img{height:22px;object-fit:contain}
+.brand-label{font-size:13px;font-weight:600;color:var(--navy);opacity:.65}
+.close-btn{
+  width:32px;height:32px;border-radius:50%;
+  border:1.5px solid #DDD;background:#fff;
+  cursor:pointer;font-size:15px;
+  display:flex;align-items:center;justify-content:center;
+  color:#888;transition:background .15s;text-decoration:none;
+}
+.close-btn:hover{background:#f0f0f0}
 
-    .main-heading {
-        font-size: 1.6rem;
-        font-weight: 700;
-        margin-bottom: 10px;
-    }
+/* ── PROGRESS ── */
+.progress-wrap{
+  width:100%;max-width:420px;
+  padding:10px 20px 4px;flex-shrink:0;
+}
+.pb-bg{height:3px;background:#E0DDD6;border-radius:2px;overflow:hidden}
+.pb-fill{height:100%;background:var(--orange);border-radius:2px;transition:width .35s ease}
+.pb-text{font-size:12px;color:#aaa;text-align:right;margin-top:5px;font-weight:500}
 
-    .sub-heading {
-        font-size: 0.95rem;
-        color: #dbeafe;
-        margin-bottom: 18px;
-    }
+/* ── ARENA ── */
+.arena{
+  flex:1;
+  width:100%;max-width:420px;
+  display:flex;align-items:center;justify-content:center;
+  position:relative;
+  padding:12px 16px;
+  min-height:0;
+}
 
-    .level-title {
-        font-size: 1.3rem;
-        margin-bottom: 15px;
-        font-weight: 600;
-        color: #facc15;
-    }
+/* ── BEHIND CARDS ── */
+.card-behind{
+  position:absolute;
+  width:calc(100% - 32px);max-width:388px;
+  background:#fff;border-radius:var(--r);
+  border:1px solid #E8E4DC;
+  height:calc(100% - 24px);
+}
+.cb2{transform:scale(.94) translateY(16px);z-index:1;}
+.cb1{transform:scale(.97) translateY(8px);z-index:2;}
 
-    .question-box {
-        background: rgba(255,255,255,0.12);
-        padding: 18px;
-        border-radius: 14px;
-    }
+/* ── SWIPE CARD ── */
+.swipe-card{
+  position:absolute;z-index:10;
+  width:calc(100% - 32px);max-width:388px;
+  height:calc(100% - 24px);
+  border-radius:var(--r);
+  background:#fff;border:1px solid #E8E4DC;
+  cursor:grab;user-select:none;
+  overflow:hidden;will-change:transform;
+  touch-action:none;
+  display:flex;flex-direction:column;
+}
+.swipe-card:active{cursor:grabbing}
 
-    .option {
-        background: rgba(255,255,255,0.2);
-        padding: 10px;
-        margin: 10px 0;
-        border-radius: 10px;
-        cursor: pointer;
-        transition: 0.2s;
-        border: 1px solid transparent;
-    }
+/* ── CARD INTERNALS ── */
+.c-stripe{height:5px;width:100%;flex-shrink:0}
+.c-body{
+  padding:14px 18px 16px;
+  flex:1;display:flex;flex-direction:column;gap:12px;
+  min-height:0;
+}
+.c-top{display:flex;align-items:flex-start;justify-content:space-between}
+.c-tag{
+  font-size:10.5px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;
+  padding:3px 10px;border-radius:20px;
+}
+.c-meta{display:flex;flex-direction:column;align-items:flex-end;gap:1px}
+.c-logo{height:18px;object-fit:contain;opacity:.75}
+.c-num{font-size:11px;color:#bbb;font-weight:600}
+.c-title{font-family:var(--serif);font-size:20px;color:var(--navy);line-height:1.25}
+.c-sub{font-size:12px;color:#999;margin-top:-4px}
+.c-points{list-style:none;display:flex;flex-direction:column;gap:9px;}
+.c-points li{
+  display:flex;align-items:flex-start;gap:8px;
+  font-size:12.5px;color:#374151;line-height:1.45;
+}
+.pdot{
+  width:17px;height:17px;border-radius:50%;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  font-size:8px;font-weight:700;margin-top:1px;
+}
+.c-fact{
+  margin-top:auto;flex-shrink:0;
+  border-radius:10px;padding:10px 12px;
+  font-size:12px;line-height:1.5;
+}
+.c-fact strong{display:block;font-size:10px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;margin-bottom:2px}
 
-    .option:hover {
-        background: rgba(255,255,255,0.3);
-        transform: scale(1.03);
-    }
+/* ── SWIPE OVERLAYS ── */
+.ov-l,.ov-r{
+  position:absolute;inset:0;border-radius:var(--r);
+  display:flex;align-items:center;justify-content:center;
+  opacity:0;pointer-events:none;z-index:20;
+}
+.ov-l{background:rgba(239,68,68,.1)}
+.ov-r{background:rgba(34,197,94,.1)}
+.ov-label{
+  padding:9px 20px;border-radius:50px;
+  font-size:20px;font-weight:700;border:3px solid;
+}
+.ov-l .ov-label{border-color:#ef4444;color:#ef4444;transform:rotate(15deg)}
+.ov-r .ov-label{border-color:#22c55e;color:#22c55e;transform:rotate(-15deg)}
 
-    .option.wrong {
-        background: rgba(248,113,113,0.18);
-        border-color: #f87171;
-    }
+/* ── BUTTONS ── */
+.hint{font-size:11px;color:#bbb;text-align:center;padding:4px 0;flex-shrink:0}
+.btn-row{
+  display:flex;align-items:center;justify-content:center;
+  gap:18px;padding:10px 20px 14px;
+  width:100%;max-width:420px;flex-shrink:0;
+}
 
-    .option.correct {
-        background: rgba(34,197,94,0.2);
-        border-color: #22c55e;
-    }
+.btn-got{
+  padding:0 24px;height:46px;border-radius:50px;border:none;cursor:pointer;
+  background:var(--orange);color:#fff;font-size:13px;font-weight:600;
+  font-family:var(--font);box-shadow:0 2px 12px rgba(255,91,46,.3);
+  transition:transform .15s,background .15s;
+}
+.btn-got:hover{background:#e04a1f;transform:translateY(-1px)}
 
-    .feedback-msg {
-        margin-top: 6px;
-        font-size: 0.85rem;
-        min-height: 18px;
-        color: #fecaca;
-        text-align: center;
-    }
+/* ── DONE ── */
+.done{
+  display:none;flex-direction:column;align-items:center;
+  justify-content:center;text-align:center;
+  padding:40px 32px;gap:14px;
+  width:100%;max-width:420px;flex:1;
+}
+.done.show{display:flex}
+.done-emoji{font-size:52px}
+.done-title{font-family:var(--serif);font-size:24px;color:var(--navy)}
+.done-sub{font-size:13px;color:#888;max-width:240px}
+.done-btn{
+  padding:11px 26px;border-radius:50px;
+  border:none;font-size:13px;font-weight:600;
+  cursor:pointer;font-family:var(--font);
+  transition:opacity .15s;text-decoration:none;display:inline-block;
+}
 
-    .overlay {
-        position: fixed;
-        inset: 0;
-        background: rgba(0,0,0,0.7);
-        display: none;
-        justify-content: center;
-        align-items: center;
-        backdrop-filter: blur(5px);
-    }
+/* ── EXIT ANIMS ── */
+.exit-l{animation:goLeft .32s ease forwards}
+.exit-r{animation:goRight .32s ease forwards}
+@keyframes goLeft{to{transform:translateX(-140%) rotate(-28deg);opacity:0}}
+@keyframes goRight{to{transform:translateX(140%) rotate(28deg);opacity:0}}
 
-    .popup {
-        background: #1e293b;
-        padding: 25px;
-        border-radius: 20px;
-        width: 85%;
-        max-width: 360px;
-        text-align: center;
-        border: 2px solid #22c55e;
-        animation: popAnim 0.4s ease-out;
-    }
-
-    @keyframes popAnim {
-        from { transform: scale(0.6); opacity: 0; }
-        to   { transform: scale(1); opacity: 1; }
-    }
-
-    .popup button {
-        padding: 10px 18px;
-        background: #22c55e;
-        border: none;
-        color: #0f172a;
-        font-size: 0.95rem;
-        font-weight: bold;
-        border-radius: 25px;
-        cursor: pointer;
-        transition: 0.15s;
-        width: 100%;
-        margin-top: 18px;
-    }
-
-    /* ⭐ Feature List inside popup */
-    .feature-list {
-        text-align: left;
-        margin: 18px 0;
-    }
-
-    .feature-item {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        margin: 8px 0;
-        font-size: 0.95rem;
-        color: #d1fae5;
-        font-weight: 500;
-    }
-
-    .feature-item span {
-        color: #22c55e;
-        font-size: 1.2rem;
-    }
+/* ── DESKTOP ── */
+@media(min-width:600px){
+  .page{background:#E8E4DC;justify-content:center}
+  .header,.progress-wrap,.arena,.btn-row,.hint{
+    background:#F5F3EF;
+  }
+  .header{border-radius:20px 20px 0 0;border:1px solid #DDD;border-bottom:1px solid #E8E4DC}
+  .progress-wrap{border-left:1px solid #DDD;border-right:1px solid #DDD}
+  .arena{border-left:1px solid #DDD;border-right:1px solid #DDD}
+  .hint{border-left:1px solid #DDD;border-right:1px solid #DDD}
+  .btn-row{border-radius:0 0 20px 20px;border:1px solid #DDD;border-top:1px solid #E8E4DC}
+  .dk-hint{display:block}
+}
+.dk-hint{display:none;font-size:11px;color:#bbb;text-align:center;padding:2px 0;flex-shrink:0;width:100%;max-width:420px}
 </style>
 </head>
-
 <body>
 
-<div class="box" id="mainBox">
+<div class="page">
 
-    <div class="main-heading">Unlock Beginner to Topper Level 🚀</div>
-    <div class="sub-heading">Follow Topper’s path—start as a Beginner and level up like a Rank 1 achiever using Super Pass!</div>
-
-    <div class="level-title" id="levelTitle">🥉 Level 1: Beginner</div>
-
-    <div class="question-box" id="questionBox"></div>
-
-</div>
-
-<!-- Popup -->
-<div class="overlay" id="popup">
-    <div class="popup">
-        <h3>🔥 Achiever Level Unlocked!</h3>
-        <p>“75% of Students reached TOPPER level only after upgrading to Super Pass?”</p>
-
-        <!-- ⭐ Features Highlight -->
-        <div class="feature-list">
-            <div class="feature-item"><span>✔</span> Live Classes by Top Educators</div>
-            <div class="feature-item"><span>✔</span> Unlimited Mock Tests & Previous Year Papers</div>
-            <div class="feature-item"><span>✔</span> Doubt Solving Sessions with Expert Faculty</div>
-        </div>
-
-        <button onclick="window.open('https://testbk.co/1f9wk','_blank')">
-            Upgrade to Super Pass @ ₹1
-        </button>
+  <!-- Header -->
+  <div class="header">
+    <div class="brand">
+      <img src="https://cdn.testbook.com/resources/productionimages/Nirnay%20LOGO_All_1755832743.png" alt="Testbook">
+      <span class="brand-label">Buddy Mode</span>
     </div>
+    <button class="close-btn" onclick="if(window.history.length>1){history.back()}else{window.close()}" title="Close">✕</button>
+  </div>
+
+  <!-- Progress -->
+  <div class="progress-wrap">
+    <div class="pb-bg"><div class="pb-fill" id="pbFill" style="width:0%"></div></div>
+    <div class="pb-text" id="pbText">1 / 15</div>
+  </div>
+
+  <!-- Arena -->
+  <div class="arena" id="arena">
+    <div class="card-behind cb2" id="cb2"></div>
+    <div class="card-behind cb1" id="cb1"></div>
+  </div>
+
+  <!-- Done -->
+  <div class="done" id="done">
+    <div class="done-emoji">🎉</div>
+    <p class="done-title">You nailed it!</p>
+    <p class="done-sub">All 15 IVC concepts reviewed. You're exam-ready!</p>
+    <button class="done-btn" style="background:var(--orange);color:#fff" onclick="restart()">Restart ↺</button>
+    <a class="done-btn" style="background:var(--navy);color:#fff;margin-top:2px" href="https://testbook.com/ias-preparation/indus-valley-civilization" target="_blank">Full Notes →</a>
+  </div>
+
+  <!-- Hint + Buttons -->
+  <div class="dk-hint" id="dkHint">← Arrow keys or drag to navigate →</div>
+  <div class="hint" id="hint">Swipe left or right to navigate</div>
+  <div class="btn-row" id="btnRow">
+    <button class="btn-got" onclick="go('right')">Got it ✓</button>
+  </div>
+
 </div>
 
 <script>
-/* ----------------------------------
-      QUESTION BANK (20 PER LEVEL)
------------------------------------*/
+const DATA=[
+  {tag:"Overview",tBg:"#FFF0EA",tClr:"#C13A10",stripe:"#FF5B2E",
+   title:"What is the IVC?",sub:"India's first urban civilisation",
+   pts:["First urban civilization of <b>South Asia</b> — Bronze Age, proto-history of India.",
+        "Covered <b>8,00,000 sq.km</b> — larger than Egypt &amp; Mesopotamia combined.",
+        "Also called <b>Harappan Civilisation</b> after Harappa, the first excavated site.",
+        "Announced to the world by <b>John Marshall in 1924</b>."],
+   pBg:"#FFF0EA",pClr:"#C13A10",
+   fBg:"#FFF0EA",fClr:"#7A2510",fLbl:"MIND BLOWER",
+   fact:"IIT-KGP research: IVC is at least <b>8,000 years old</b> — older than previously thought!"},
 
-const beginnerQuestions = [
-    { q: "What is 6 + 4?", options: ["10", "9", "8"], ans: "10" },
-    { q: "What is 8 - 3?", options: ["6", "5", "4"], ans: "5" },
-    { q: "What comes after 11?", options: ["10", "12", "13"], ans: "12" },
-    { q: "Which is greatest?", options: ["5", "8", "2"], ans: "8" },
-    { q: "What is 7 + 2?", options: ["10", "9", "8"], ans: "9" },
-    { q: "Which number is smallest?", options: ["6", "1", "3"], ans: "1" },
-    { q: "What is 9 - 5?", options: ["3", "4", "5"], ans: "4" },
-    { q: "What is 10 - 1?", options: ["9", "8", "10"], ans: "9" },
-    { q: "Which comes before 20?", options: ["21", "19", "18"], ans: "19" },
-    { q: "What is 4 + 4?", options: ["7", "8", "6"], ans: "8" },
-    { q: "What is 2 + 6?", options: ["7", "8", "9"], ans: "8" },
-    { q: "What is 5 + 2?", options: ["6", "7", "8"], ans: "7" },
-    { q: "What is 3 + 3?", options: ["5", "6", "7"], ans: "6" },
-    { q: "Which is even?", options: ["3", "4", "7"], ans: "4" },
-    { q: "What is 12 - 2?", options: ["10", "9", "11"], ans: "10" },
-    { q: "What comes after 9?", options: ["8", "10", "11"], ans: "10" },
-    { q: "What is 1 + 1?", options: ["2", "3", "1"], ans: "2" },
-    { q: "Which is odd?", options: ["6", "9", "4"], ans: "9" },
-    { q: "What is 3 + 5?", options: ["9", "7", "8"], ans: "8" },
-    { q: "What is 1 + 4?", options: ["6", "5", "4"], ans: "5" }
+  {tag:"Phases",tBg:"#E6F7F6",tClr:"#076B62",stripe:"#0C9488",
+   title:"Three Phases of IVC",sub:"Early → Mature → Late",
+   pts:["<b>Early (3200–2600 BCE):</b> Fortification, grid planning, trade network. Sites: Kot Diji, Amri.",
+        "<b>Mature (2600–1900 BCE):</b> Full urbanisation, writing emerges, Mohenjo-daro peak.",
+        "<b>Late (1900–1300 BCE):</b> Decline, site abandonment, shift to pastoral life."],
+   pBg:"#E6F7F6",pClr:"#076B62",
+   fBg:"#E6F7F6",fClr:"#0A4D47",fLbl:"EXAM TIP",
+   fact:"Radiocarbon dating confirmed the <b>3300–1300 BCE</b> timeline for all three phases."},
+
+  {tag:"Site",tBg:"#EEECFB",tClr:"#3B30A8",stripe:"#5B4FCF",
+   title:"Harappa",sub:"Punjab, Pakistan · River Ravi · 1921",
+   pts:["Excavated by <b>Daya Ram Sahni (1921)</b> — gives name to the entire civilisation.",
+        "<b>Two rows of six granaries</b> — most iconic feature of this site.",
+        "Evidence of <b>coffin burial</b> and Cemetery 'H' culture.",
+        "<b>Bronze dancing girl</b> and red stone idols found here."],
+   pBg:"#EEECFB",pClr:"#3B30A8",
+   fBg:"#EEECFB",fClr:"#26215C",fLbl:"UPSC FAVOURITE",
+   fact:"Direct evidence of <b>trade with Mesopotamia</b> found at Harappa."},
+
+  {tag:"Site",tBg:"#EEECFB",tClr:"#3B30A8",stripe:"#5B4FCF",
+   title:"Mohenjo-daro",sub:"Sindh, Pakistan · River Indus · 1922",
+   pts:["Excavated by <b>R.D. Banerjee (1922)</b>. Means 'Mound of the Dead'.",
+        "<b>Great Bath (12×7×3m)</b>, assembly hall, large granary.",
+        "<b>Pashupati Seal</b> (proto-Shiva) &amp; Bearded Priest steatite bust found here.",
+        "Evidence of <b>woven cotton cloth</b> — earliest in the world."],
+   pBg:"#EEECFB",pClr:"#3B30A8",
+   fBg:"#EEECFB",fClr:"#26215C",fLbl:"EXAM TRAP",
+   fact:"Superficial evidence of <b>horse bones</b> found — highly debated in UPSC answers!"},
+
+  {tag:"Site",tBg:"#EAF7F1",tClr:"#0F6040",stripe:"#1A8F5C",
+   title:"Lothal",sub:"Gujarat · Bhogava+Sabarmati · 1957",
+   pts:["Excavated by <b>S.R. Rao (1957)</b>. Only site with a <b>dockyard</b>.",
+        "City divided into <b>six sectors</b> — unique layout.",
+        "<b>Double burial</b> (male &amp; female together) found here.",
+        "<b>Ivory scale, Mesopotamian seal</b> &amp; terracotta model of ship found."],
+   pBg:"#EAF7F1",pClr:"#0F6040",
+   fBg:"#EAF7F1",fClr:"#0A3D28",fLbl:"UNIQUE FEATURE",
+   fact:"Lothal had <b>houses with main entrance</b> — all other IVC sites had side entries only!"},
+
+  {tag:"Site",tBg:"#FEF8E7",tClr:"#8A6100",stripe:"#D4960A",
+   title:"Dholavira",sub:"Gujarat · Khadir Bet Island · 1990–91",
+   pts:["Excavated by <b>J.P. Joshi (1990–91)</b>.",
+        "<b>Giant water reservoir</b> &amp; unique water harvesting system.",
+        "An inscription of <b>ten large Harappan script signs</b> — like a signboard.",
+        "<b>Large-scale use of sandstone</b> — unique to this site."],
+   pBg:"#FEF8E7",pClr:"#8A6100",
+   fBg:"#FEF8E7",fClr:"#5A3F00",fLbl:"CURRENT AFFAIRS",
+   fact:"Dholavira is now a <b>UNESCO World Heritage Site</b> &amp; an Iconic Destination (Budget 2020)."},
+
+  {tag:"Town Planning",tBg:"#F0EEFE",tClr:"#4A3BB0",stripe:"#7B6FE0",
+   title:"Urban Planning",sub:"World's first grid city",
+   pts:["<b>Grid pattern:</b> Straight roads crossing at right angles.",
+        "<b>Standardised bricks:</b> 1:2:4 ratio. House bricks 7×14×28 cm.",
+        "<b>Covered drainage:</b> Brick drains along every street.",
+        "<b>No palaces or temples</b> — suggests democratic governance."],
+   pBg:"#F0EEFE",pClr:"#4A3BB0",
+   fBg:"#F0EEFE",fClr:"#2D2180",fLbl:"MAINS QUESTION",
+   fact:"UPSC Mains 2014 asked directly about IVC's inputs to <b>present-day urbanisation</b>."},
+
+  {tag:"Town Planning",tBg:"#F0EEFE",tClr:"#4A3BB0",stripe:"#7B6FE0",
+   title:"The Great Bath",sub:"World's earliest public water tank",
+   pts:["Located at <b>Mohenjo-daro</b>. Dimensions: <b>12m × 7m × 3m deep</b>.",
+        "Made <b>waterproof</b> with burnt bricks, gypsum mortar &amp; bitumen layer.",
+        "Had <b>steps on both sides</b>, side rooms &amp; changing area.",
+        "Used for <b>ritual bathing and purification</b>."],
+   pBg:"#F0EEFE",pClr:"#4A3BB0",
+   fBg:"#F0EEFE",fClr:"#2D2180",fLbl:"KEY STRUCTURE",
+   fact:"The Great Bath is considered the world's first <b>public sanitation infrastructure</b>."},
+
+  {tag:"Economy",tBg:"#EAF7F1",tClr:"#0F6040",stripe:"#1A8F5C",
+   title:"Economy &amp; Agriculture",sub:"Agriculture + craft + trade",
+   pts:["<b>First cotton cultivation</b> in the world.",
+        "Crops: wheat, barley, peas, mustard, sesame, rice (Gujarat only).",
+        "<b>No coins</b> — barter with seals &amp; standardised weights.",
+        "<b>Standardised weights:</b> Binary (1,2,4,8…) and decimal system."],
+   pBg:"#EAF7F1",pClr:"#0F6040",
+   fBg:"#EAF7F1",fClr:"#0A3D28",fLbl:"EXAM TIP",
+   fact:"Harappans used <b>bronze but no iron</b> — lost-wax casting for tools &amp; ornaments."},
+
+  {tag:"Trade",tBg:"#FFF0EA",tClr:"#C13A10",stripe:"#FF5B2E",
+   title:"Foreign Trade",sub:"Mesopotamia, Sumer &amp; beyond",
+   pts:["Active trade with <b>Mesopotamia &amp; Sumer</b> — Harappan seals found there.",
+        "<b>Exports:</b> Cotton, beads, timber, ivory.",
+        "<b>Gold</b> from Afghanistan/Kolar; <b>Copper</b> from Khetri, Rajasthan.",
+        "<b>Lapis Lazuli</b> from Afghanistan; <b>Silver</b> from Rajasthan mines."],
+   pBg:"#FFF0EA",pClr:"#C13A10",
+   fBg:"#FFF0EA",fClr:"#7A2510",fLbl:"HIGH YIELD",
+   fact:"<b>Lothal's dockyard</b> connected Harappan trade directly to sea routes."},
+
+  {tag:"Art",tBg:"#EAF0F8",tClr:"#1A3055",stripe:"#0F1F38",
+   title:"Iconic Art &amp; Artefacts",sub:"Bronze Age masterpieces",
+   pts:["<b>Dancing Girl</b> — 10.5 cm bronze statue (Mohenjo-daro). Lost-wax cast.",
+        "<b>Bearded Priest</b> — 17.5 cm steatite bust with shawl, closed eyes.",
+        "<b>2000+ steatite seals</b> — animals (unicorn, bull), swastika motifs, undeciphered script.",
+        "<b>Terracotta figurines</b> — Mother Goddess, animals, toys, carts."],
+   pBg:"#EAF0F8",pClr:"#1A3055",
+   fBg:"#EAF0F8",fClr:"#0C1D30",fLbl:"ART FACT",
+   fact:"Female terracotta figurines <b>outnumber male</b> figurines at Harappa."},
+
+  {tag:"Religion",tBg:"#FEF8E7",tClr:"#8A6100",stripe:"#D4960A",
+   title:"Religious Practices",sub:"Nature-based, no formal temples",
+   pts:["<b>Mother Goddess:</b> Most widespread — terracotta female figurines.",
+        "<b>Pashupati Seal:</b> Horned man in yogic pose — Proto-Shiva.",
+        "<b>Fire altars</b> at Kalibangan &amp; Lothal — Vedic-type rituals.",
+        "<b>No grand temples</b> found — unlike Egypt/Mesopotamia."],
+   pBg:"#FEF8E7",pClr:"#8A6100",
+   fBg:"#FEF8E7",fClr:"#5A3F00",fLbl:"RELIGION",
+   fact:"The <b>Swastika symbol</b> first appears on Harappan seals."},
+
+  {tag:"Script",tBg:"#EEECFB",tClr:"#3B30A8",stripe:"#5B4FCF",
+   title:"Harappan Script",sub:"Still undeciphered",
+   pts:["Writing style: <b>Boustrophedon</b> — written right to left.",
+        "<b>Pictographic script</b> — engraved on seals, bones, ivory.",
+        "Script <b>vanished by 1700 BCE</b>.",
+        "Possible link to <b>Tamil-Brahmi script</b> — Keezhadi site, 580 BCE."],
+   pBg:"#EEECFB",pClr:"#3B30A8",
+   fBg:"#EEECFB",fClr:"#26215C",fLbl:"MYSTERY",
+   fact:"Despite 130+ years of study, Harappan script remains <b>completely undeciphered</b>."},
+
+  {tag:"Decline",tBg:"#FEF0F0",tClr:"#A02020",stripe:"#E53935",
+   title:"Why Did IVC Decline?",sub:"~1800 BCE — still debated",
+   pts:["<b>Aryan Invasion Theory</b> — invasion &amp; destruction; skeleton evidence at Mohenjo-daro.",
+        "<b>River course change</b> — Ghaggar-Hakra dried up causing aridity.",
+        "<b>Climate change</b> — reduced rainfall → droughts → agricultural collapse.",
+        "<b>Epidemic theory</b> — disease spread in dense urban settlements."],
+   pBg:"#FEF0F0",pClr:"#A02020",
+   fBg:"#FEF0F0",fClr:"#7A1010",fLbl:"CURRENT VIEW",
+   fact:"Most historians today favour <b>climate change + river change</b> over Aryan invasion."},
+
+  {tag:"UPSC PYQ",tBg:"#F0EEFE",tClr:"#4A3BB0",stripe:"#7B6FE0",
+   title:"Top UPSC Questions",sub:"Prelims + Mains",
+   pts:["<b>Prelims 2021:</b> Which site has elaborate water harvesting? → <i>Dholavira</i>",
+        "<b>Prelims 2019:</b> Which is NOT Harappan? Sohgaura/Chanhudaro/Desalpur → <i>Sohgaura</i>",
+        "<b>Prelims 2013:</b> IVC people worshipped male &amp; female deities? → <i>True</i>",
+        "<b>Mains 2014:</b> Discuss IVC urban planning inputs to present-day urbanisation."],
+   pBg:"#F0EEFE",pClr:"#4A3BB0",
+   fBg:"#F0EEFE",fClr:"#2D2180",fLbl:"EXAM STRATEGY",
+   fact:"IVC is under <b>GS Paper I — Ancient History</b>. Appears almost every year!"}
 ];
 
-const explorerQuestions = [
-    { q: "Which gas do plants release?", options: ["Oxygen", "CO₂", "Nitrogen"], ans: "Oxygen" },
-    { q: "Largest planet?", options: ["Mars", "Jupiter", "Earth"], ans: "Jupiter" },
-    { q: "H2O is?", options: ["Salt", "Water", "Oxygen"], ans: "Water" },
-    { q: "Heart has how many chambers?", options: ["2", "4", "6"], ans: "4" },
-    { q: "Blood pumps by?", options: ["Liver", "Heart", "Brain"], ans: "Heart" },
-    { q: "Sun is a?", options: ["Planet", "Star", "Rock"], ans: "Star" },
-    { q: "Earth rotates in?", options: ["24 hrs", "12 hrs", "48 hrs"], ans: "24 hrs" },
-    { q: "Human body has how many bones?", options: ["206", "250", "150"], ans: "206" },
-    { q: "Plants absorb?", options: ["CO₂", "Oxygen", "Helium"], ans: "CO₂" },
-    { q: "The closest planet to Sun?", options: ["Earth", "Mars", "Mercury"], ans: "Mercury" },
-    { q: "The hardest substance?", options: ["Gold", "Iron", "Diamond"], ans: "Diamond" },
-    { q: "Human brain weighs approx?", options: ["1.3 kg", "3 kg", "0.5 kg"], ans: "1.3 kg" },
-    { q: "Which organ detoxifies?", options: ["Liver", "Heart", "Lungs"], ans: "Liver" },
-    { q: "Fish breathe using?", options: ["Nose", "Lungs", "Gills"], ans: "Gills" },
-    { q: "Birds have?", options: ["Fur", "Feathers", "Scales"], ans: "Feathers" },
-    { q: "Plants make food by?", options: ["Breathing", "Photosynthesis", "Eating"], ans: "Photosynthesis" },
-    { q: "Which planet is red?", options: ["Venus", "Mars", "Saturn"], ans: "Mars" },
-    { q: "Insects have how many legs?", options: ["6", "8", "4"], ans: "6" },
-    { q: "Largest ocean?", options: ["Atlantic", "Pacific", "Indian"], ans: "Pacific" },
-    { q: "Smallest bone?", options: ["Stapes", "Tibia", "Femur"], ans: "Stapes" }
-];
+let idx=0,dragging=false,startX=0,curX=0,card=null;
+const THRESH=75;
 
-const challengerQuestions = [
-    { q: "Who discovered gravity?", options: ["Einstein", "Newton", "Bohr"], ans: "Newton" },
-    { q: "Speed of light?", options: ["3×10⁸ m/s", "3×10⁶ m/s", "3×10⁴ m/s"], ans: "3×10⁸ m/s" },
-    { q: "Heaviest metal?", options: ["Iron", "Gold", "Osmium"], ans: "Osmium" },
-    { q: "Vitamin from sunlight?", options: ["A", "C", "D"], ans: "D" },
-    { q: "Universal donor?", options: ["O-", "AB+", "A+"], ans: "O-" },
-    { q: "Atomic number of oxygen?", options: ["6", "8", "10"], ans: "8" },
-    { q: "Smallest prime number?", options: ["1", "2", "3"], ans: "2" },
-    { q: "Highest mountain?", options: ["K2", "Everest", "Kangchenjunga"], ans: "Everest" },
-    { q: "Which planet has rings?", options: ["Earth", "Mars", "Saturn"], ans: "Saturn" },
-    { q: "Water boils at?", options: ["50°C", "100°C", "150°C"], ans: "100°C" },
-    { q: "Fastest land animal?", options: ["Tiger", "Cheetah", "Lion"], ans: "Cheetah" },
-    { q: "Human blood pH?", options: ["7.4", "3.1", "10.2"], ans: "7.4" },
-    { q: "Sunlight contains?", options: ["UV", "Gamma", "X-Ray"], ans: "UV" },
-    { q: "Lungs capacity?", options: ["6 L", "2 L", "10 L"], ans: "6 L" },
-    { q: "Brain cells called?", options: ["Neurons", "Tissues", "Plasma"], ans: "Neurons" },
-    { q: "Metal that floats on water?", options: ["Iron", "Lithium", "Copper"], ans: "Lithium" },
-    { q: "Largest desert?", options: ["Sahara", "Gobi", "Arctic"], ans: "Sahara" },
-    { q: "Strongest muscle?", options: ["Tongue", "Heart", "Leg"], ans: "Heart" },
-    { q: "Which organ stores bile?", options: ["Liver", "Stomach", "Gallbladder"], ans: "Gallbladder" },
-    { q: "Sound travels fastest in?", options: ["Air", "Water", "Solid"], ans: "Solid" }
-];
-
-const achieverQuestions = [
-    { q: "NASA stands for?", options: ["North American Space Agency", "National Aeronautics and Space Administration", "New Aero Scientific Agency"], ans: "National Aeronautics and Space Administration" },
-    { q: "First man in space?", options: ["Neil Armstrong", "Yuri Gagarin", "Buzz Aldrin"], ans: "Yuri Gagarin" },
-    { q: "Einstein’s equation?", options: ["F=ma", "E=mc²", "PV=nRT"], ans: "E=mc²" },
-    { q: "Which planet has most moons?", options: ["Earth", "Jupiter", "Venus"], ans: "Jupiter" },
-    { q: "Deepest ocean point?", options: ["Mariana Trench", "Java Trench", "Tonga Trench"], ans: "Mariana Trench" },
-    { q: "Human DNA shape?", options: ["Single helix", "Double helix", "Triple helix"], ans: "Double helix" },
-    { q: "Who invented telephone?", options: ["Alexander Graham Bell", "Edison", "Tesla"], ans: "Alexander Graham Bell" },
-    { q: "Fastest bird?", options: ["Eagle", "Peregrine Falcon", "Hawk"], ans: "Peregrine Falcon" },
-    { q: "Which gas causes global warming?", options: ["CO₂", "Helium", "Nitrogen"], ans: "CO₂" },
-    { q: "Largest continent?", options: ["Africa", "Asia", "Europe"], ans: "Asia" }
-];
-
-/* ----------------------------------
-      RANDOM QUESTION LOADER
------------------------------------*/
-
-function loadQuestion(level) {
-    let qSet;
-
-    if (level === 1) qSet = beginnerQuestions;
-    if (level === 2) qSet = explorerQuestions;
-    if (level === 3) qSet = challengerQuestions;
-    if (level === 4) qSet = achieverQuestions;
-
-    const random = qSet[Math.floor(Math.random() * qSet.length)];
-
-    const safeAns = random.ans.replace(/'/g, "\\'");
-    const optionsHtml = random.options
-        .map(opt => {
-            const safeOpt = opt.replace(/'/g, "\\'");
-            return `<div class="option" onclick="checkAnswer(${level}, '${safeOpt}', '${safeAns}', this)">${opt}</div>`;
-        })
-        .join("");
-
-    document.getElementById("questionBox").innerHTML = `
-        <h3>${level === 1 ? "Beginner" : level === 2 ? "Explorer" : level === 3 ? "Challenger" : "Achiever"} Question</h3>
-        <p>${random.q}</p>
-        ${optionsHtml}
-        <div id="feedback" class="feedback-msg"></div>
-    `;
+function mkCard(i){
+  if(i>=DATA.length)return null;
+  const d=DATA[i],el=document.createElement('div');
+  el.className='swipe-card';
+  el.innerHTML=`
+    <div class="c-stripe" style="background:${d.stripe}"></div>
+    <div class="c-body">
+      <div class="c-top">
+        <span class="c-tag" style="background:${d.tBg};color:${d.tClr}">${d.tag}</span>
+        <div class="c-meta">
+          <img class="c-logo" src="https://cdn.testbook.com/resources/productionimages/Nirnay%20LOGO_All_1755832743.png" alt="">
+          <span class="c-num">${i+1} / ${DATA.length}</span>
+        </div>
+      </div>
+      <div><p class="c-title">${d.title}</p><p class="c-sub">${d.sub}</p></div>
+      <ul class="c-points">${d.pts.map(p=>`<li><span class="pdot" style="background:${d.pBg};color:${d.pClr}">✦</span><span>${p}</span></li>`).join('')}</ul>
+      <div class="c-fact" style="background:${d.fBg};color:${d.fClr}">
+        <strong style="color:${d.tClr}">${d.fLbl}</strong>${d.fact}
+      </div>
+    </div>
+    <div class="ov-l"><span class="ov-label">SKIP</span></div>
+    <div class="ov-r"><span class="ov-label">GOT IT</span></div>`;
+  return el;
 }
 
-/* ----------------------------------
-      ANSWER CHECK + LEVEL LOGIC
------------------------------------*/
+function render(){
+  const arena=document.getElementById('arena');
+  const old=arena.querySelector('.swipe-card');
+  if(old)old.remove();
 
-function checkAnswer(level, selected, correct, elem) {
-    const feedbackEl = document.getElementById("feedback");
+  if(idx>=DATA.length){
+    document.getElementById('done').classList.add('show');
+    document.getElementById('btnRow').style.display='none';
+    document.getElementById('hint').style.display='none';
+    document.getElementById('dkHint').style.display='none';
+    document.getElementById('arena').style.display='none';
+    document.getElementById('pbFill').style.width='100%';
+    document.getElementById('pbText').textContent='Complete!';
+    return;
+  }
 
-    if (selected !== correct) {
-        // Indicate wrong – keep question active
-        feedbackEl.textContent = "Not correct yet — try once more!";
-        elem.classList.add("wrong");
-        elem.style.pointerEvents = "none"; // disable only this option
-        return;
-    }
+  document.getElementById('pbFill').style.width=(idx/DATA.length*100)+'%';
+  document.getElementById('pbText').textContent=(idx+1)+' / '+DATA.length;
 
-    // Correct answer
-    feedbackEl.textContent = "✅ Correct! Moving to next level...";
-    elem.classList.add("correct");
+  card=mkCard(idx);
+  arena.appendChild(card);
+  attach(card);
 
-    setTimeout(() => {
-        if (level === 1) goToLevel2();
-        else if (level === 2) goToLevel3();
-        else if (level === 3) goToLevel4();
-        // Level 4 stays on CTA
-    }, 500);
+  document.getElementById('cb1').style.display=idx+1<DATA.length?'block':'none';
+  document.getElementById('cb2').style.display=idx+2<DATA.length?'block':'none';
 }
 
-/* Level 2 */
-function goToLevel2() {
-    document.getElementById("levelTitle").innerHTML = "🔎 Level 2: Explorer";
-    loadQuestion(2);
+function go(dir){
+  if(!card||idx>=DATA.length)return;
+  card.classList.add(dir==='left'?'exit-l':'exit-r');
+  setTimeout(()=>{idx++;render();},300);
 }
 
-/* Level 3 */
-function goToLevel3() {
-    document.getElementById("levelTitle").innerHTML = "⚔️ Level 3: Challenger";
-    loadQuestion(3);
+function attach(el){
+  el.addEventListener('touchstart',ds,{passive:true});
+  el.addEventListener('touchmove',dm,{passive:true});
+  el.addEventListener('touchend',de,{passive:true});
+  el.addEventListener('mousedown',ds);
+  window.addEventListener('mousemove',dm);
+  window.addEventListener('mouseup',de);
 }
 
-/* Level 4 */
-function goToLevel4() {
-    document.getElementById("levelTitle").innerHTML = "🏆 Level 4: Achiever";
-    document.getElementById("popup").style.display = "flex";
-    loadQuestion(4);
+function cx(e){return e.touches?e.touches[0].clientX:e.clientX}
+
+function ds(e){dragging=true;startX=cx(e);curX=0;if(card)card.style.transition='none';}
+function dm(e){
+  if(!dragging||!card)return;
+  curX=cx(e)-startX;
+  card.style.transform=`translateX(${curX}px) rotate(${curX*.055}deg)`;
+  const r=Math.min(Math.abs(curX)/THRESH,1);
+  card.querySelector('.ov-l').style.opacity=curX<-8?r:0;
+  card.querySelector('.ov-r').style.opacity=curX>8?r:0;
+}
+function de(){
+  if(!dragging||!card)return;
+  dragging=false;
+  window.removeEventListener('mousemove',dm);
+  window.removeEventListener('mouseup',de);
+  card.querySelector('.ov-l').style.opacity=0;
+  card.querySelector('.ov-r').style.opacity=0;
+  if(curX<-THRESH)go('left');
+  else if(curX>THRESH)go('right');
+  else{card.style.transition='transform .4s cubic-bezier(.34,1.56,.64,1)';card.style.transform='none';}
 }
 
-function closePopup() {
-    document.getElementById("popup").style.display = "none";
+document.addEventListener('keydown',e=>{
+  if(e.key==='ArrowLeft')go('left');
+  if(e.key==='ArrowRight')go('right');
+});
+
+function restart(){
+  idx=0;
+  document.getElementById('done').classList.remove('show');
+  document.getElementById('btnRow').style.display='flex';
+  document.getElementById('hint').style.display='block';
+  document.getElementById('arena').style.display='flex';
+  render();
 }
 
-/* Load first question */
-loadQuestion(1);
+render();
 </script>
-
 </body>
 </html>
